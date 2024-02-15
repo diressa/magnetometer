@@ -20,8 +20,7 @@ for col_y in ws.iter_cols(min_col=3, min_row=2, max_col=3, max_row=len(sheet_ran
 for col_x in ws.iter_cols(min_col=1, min_row=2, max_col=1, max_row=len(sheet_ranges['A']), values_only=True):
     print(col_x) # x-axis, time in seconds
 
-fig, ax = plt.subplots()
-ax.bar(col_x,col_y)
+plt.plot(col_x, col_y, linewidth=2, color='r')
 plt.title('Y-Direction of Microteslas')
 plt.xlabel('Time in Seconds')
 plt.ylabel('Microteslas')
