@@ -2,23 +2,35 @@ from openpyxl import load_workbook
 from statistics import mean
 from matplotlib import pyplot as plt
 
-wb = load_workbook(filename='off_closetoopen_Magnetometer 2024-02-14 12-09-25.xlsx')
+sample = random.choice(os.listdir('random_xlsx_files')) #random file sample
+#print(sample) #remove as comment to see which file is used
+wb = load_workbook(filename='random_xlsx_files/'+sample)
 ws = wb.active
 
 sheet_ranges = wb['Raw Data']
-print(sheet_ranges['A2'].value)
+data_length = len(sheet_ranges['A'])
 
 
-for col in ws.iter_cols(min_row=2, max_col=3, max_row=len(sheet_ranges['A']), values_only=True):
-    print(col) #min_row=2 because cannot calculate a mean avg with string in first row
+for col_x in ws.iter_cols(min_col=1, min_row=2, max_col=1, max_row=data_length, values_only=True):
+    list(col_x)#print(col_x) # x-axis, time in seconds
 
-print(mean(col))
+for col_y in ws.iter_cols(min_col=3, min_row=2, max_col=3, max_row=data_length, values_only=True):
+    list(col_y) # y-axis, magnitude of y-direction microteslas
 
-for col_y in ws.iter_cols(min_col=3, min_row=2, max_col=3, max_row=len(sheet_ranges['A']), values_only=True):
-    print(col_y) # y-axis, magnitude of y-direction microteslas
+classification = ''
+#print(pvariance(col_y))
 
-for col_x in ws.iter_cols(min_col=1, min_row=2, max_col=1, max_row=len(sheet_ranges['A']), values_only=True):
-    print(col_x) # x-axis, time in seconds
+if pvariance(col_y)<0.5:
+    classification = 'Nothing'
+    print(classification)  # later can group files or label?
+elif pvariance(col_y)>=0.5:
+    if sheet_ranges['C2'].value > sheet_ranges['C' + str(data_length)].value:
+        classification = 'Close to open'
+        print(classification)
+    else:
+        classification = 'Open to close'
+        print(classification)
+
 
 plt.plot(col_x, col_y, linewidth=2, color='r')
 plt.title('Y-Direction of Microteslas')
