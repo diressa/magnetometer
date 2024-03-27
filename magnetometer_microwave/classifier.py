@@ -32,7 +32,7 @@ def classify():
         for col_y in ws.iter_cols(min_col=3, min_row=2, max_col=3, max_row=data_length, values_only=True):
             list(col_y)  # y-axis, magnitude of y-direction microteslas
 
-        showplt(col_x, col_y)  # allfiles.py
+        #showplt(col_x, col_y)  # allfiles.py
 
         nothing = 'Nothing'
         opened = 'Close to open'
