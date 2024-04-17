@@ -1,13 +1,11 @@
-from openpyxl import load_workbook
-from statistics import pvariance
 import os
 import matplotlib.pyplot as plt
 from sklearn import metrics
 from classifier import s_classify
 
 stack = []
-for file in os.listdir('random_xlsx_files'):
-    stack.append(file)  # stack of all files in folder to iterate through
+for file in os.listdir('xlsx_files'):
+    stack.append(file)                              # stack of all files in folder to iterate through
 
 stack_actual = []
 stack_predicted = []
@@ -16,8 +14,8 @@ nothing = 'Nothing'
 opened = 'Close to open'
 closed = 'Open to close'
 
-file_length = len(os.listdir('random_xlsx_files'))  # num of files in 'random_xlsx_files' folder
-stack_classify = s_classify()     # imported from classifier.py, returns array of file classifications
+file_length = len(os.listdir('xlsx_files'))         # num of files in 'xlsx_files' folder
+stack_classify = s_classify()                       # imported from classifier.py, returns array of file classifications
 print(stack_classify)
 
 
@@ -52,6 +50,9 @@ for i in range(0, file_length):
         stack_actual.append(2)
         stack_predicted.append(2)
 
+print(stack_actual)
+print(stack_predicted)
+
 confusion_matrix = metrics.confusion_matrix(stack_actual, stack_predicted)
 cm_display = metrics.ConfusionMatrixDisplay(
     confusion_matrix=confusion_matrix,
@@ -59,8 +60,3 @@ cm_display = metrics.ConfusionMatrixDisplay(
 )
 cm_display.plot()
 plt.show()
-
-#example matrix:
-#y_actu = [2, 0, 2, 2, 0, 1, 1, 2, 2, 0, 1, 2] #row
-#y_pred = [0, 0, 2, 1, 0, 2, 1, 0, 2, 0, 2, 2] #column
-#print(confusion_matrix(y_actu, y_pred))
