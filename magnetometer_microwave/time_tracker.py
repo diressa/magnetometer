@@ -8,7 +8,7 @@ def showplt_var(x, y):  # time_tracker.py
     max_variance, max_index, sample_start = max_var(col_y, 100, 50)  # max_var(data, window length, step size)
     print(max_variance, max_index)
 
-    markers = sample_start  # return just row (sample #, *50)
+    markers = sample_start                                           # return just row (sample #, *50)
 
     # markers in the x and y-axis lists (start, end) of window subarray.
     markers_x = (sheet_ranges['A' + str(markers)].value, sheet_ranges['A' + str(markers + 100)].value)
@@ -16,7 +16,7 @@ def showplt_var(x, y):  # time_tracker.py
     print(markers, markers_x, markers_y)
 
     plt.plot(x, y, linewidth=2, color='r')
-    plt.plot(markers_x, markers_y, linewidth=2, color='b', marker='x')
+    plt.vlines(x=markers_x, ymin=min(y), ymax=max(y), linewidth=2, color='b')
     plt.title('Y-Direction of Microteslas')
     plt.xlabel('Time in Seconds')
     plt.ylabel('Microteslas')
